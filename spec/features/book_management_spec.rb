@@ -12,7 +12,6 @@ feature "Book management" do
     
     click_button "Save"
     
-    expect(page).to have_content "Garfield"
-    expect(page).to_not have_content "Save"
+    expect(page).to have_content "successfully created"
   end
 end

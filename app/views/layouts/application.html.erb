@@ -8,6 +8,10 @@
 </head>
 <body>
   <%= link_to "Books", books_path %>
+  
+  <% flash.each do | name, message | %>
+  <div class="flash <%= name %>"><%= message %></div>
+  <% end %>
 
 <%= yield %>
 
