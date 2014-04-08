@@ -2,6 +2,7 @@ class BooksController < ApplicationController
   before_filter :find_book, only: [:show, :edit, :update, :destroy]
   
   def index
+    @books = Book.all
   end
   
   def new

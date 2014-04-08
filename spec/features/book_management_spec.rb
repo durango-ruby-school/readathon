@@ -31,6 +31,15 @@ feature "Book management" do
     user_sees_flash_message "successfully created"
   end
   
+  scenario "user looks for all books" do
+    # Create a few books
+    FactoryGirl.create_list :book, 3
+    # Look at the page
+    visit books_path
+    # Make sure the books show up
+    expect(page).to have_css ".book", count: 3
+  end
+  
   def user_sees_flash_message msg
     expect(page).to have_content msg
   end
