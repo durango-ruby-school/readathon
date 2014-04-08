@@ -13,5 +13,15 @@ feature "Book management" do
     click_button "Save"
     
     expect(page).to have_content "successfully created"
+    
+    click_link "Edit"
+    fill_in "Title", with: "Calvin and Hobbes"
+    click_button "Save"
+    
+    expect(page).to have_content "successfully updated"
+    expect(page).to have_content "Calvin and Hobbes"
+    
+    click_link "Delete"
+    expect(page).to have_content "successfully deleted"
   end
 end
