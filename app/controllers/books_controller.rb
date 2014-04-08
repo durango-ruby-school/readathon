@@ -1,4 +1,6 @@
 class BooksController < ApplicationController
+  before_filter :find_book, only: [:show, :edit, :update, :destroy]
+  
   def index
   end
   
@@ -17,15 +19,12 @@ class BooksController < ApplicationController
   end
   
   def show
-    @book = Book.find params[:id]
   end
   
   def edit
-    @book = Book.find params[:id]
   end
   
   def update
-    @book = Book.find params[:id]
     if @book.update_attributes book_params
       flash[:notice] = "Book successfully updated."
       redirect_to @book
@@ -35,7 +34,6 @@ class BooksController < ApplicationController
   end
   
   def destroy
-    @book = Book.find params[:id]
     if @book.destroy
       flash[:notice] = "Book successfully deleted."
     end
@@ -46,5 +44,9 @@ class BooksController < ApplicationController
   
   def book_params
     params.require(:book).permit(:title, :pages)
+  end
+  
+  def find_book
+    @book = Book.find params[:id]
   end
 end
