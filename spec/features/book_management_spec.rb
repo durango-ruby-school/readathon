@@ -22,7 +22,7 @@ feature "Book management" do
   end
   
   def save
-    click_button "Save"
+    find("input[type=submit]").click
   end
   
   def add_book_with_title title
