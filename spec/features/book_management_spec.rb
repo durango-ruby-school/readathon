@@ -17,6 +17,20 @@ feature "Book management" do
     user_sees_flash_message "successfully deleted"
   end
   
+  scenario "user tries to save an invalid book" do
+    visit new_book_path
+    
+    fill_in "Pages", with: "200"
+    save
+    
+    expect(page).to_not have_content "successfully created"
+    
+    fill_in "Title", with: "Star Wars"
+    save
+    
+    user_sees_flash_message "successfully created"
+  end
+  
   def user_sees_flash_message msg
     expect(page).to have_content msg
   end
