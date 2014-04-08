@@ -3,25 +3,42 @@ require "spec_helper"
 feature "Book management" do
   scenario "User manages books" do
     visit root_path
-    
     click_link "Books"
-    click_link "Add book"
     
-    fill_in "Title", with: "Garfield"
-    fill_in "Pages", with: "250"
+    add_book_with_title "Garfield"
+    user_sees_flash_message "successfully created"
+    user_sees_book_title "Garfield"
     
-    click_button "Save"
-    
-    expect(page).to have_content "successfully created"
-    
-    click_link "Edit"
-    fill_in "Title", with: "Calvin and Hobbes"
-    click_button "Save"
-    
-    expect(page).to have_content "successfully updated"
-    expect(page).to have_content "Calvin and Hobbes"
+    edit_book_title "Calvin and Hobbes"
+    user_sees_flash_message "successfully updated"
+    user_sees_book_title "Calvin and Hobbes"
     
     click_link "Delete"
-    expect(page).to have_content "successfully deleted"
+    user_sees_flash_message "successfully deleted"
+  end
+  
+  def user_sees_flash_message msg
+    expect(page).to have_content msg
+  end
+  
+  def save
+    click_button "Save"
+  end
+  
+  def add_book_with_title title
+    click_link "Add book"
+    fill_in "Title", with: title
+    fill_in "Pages", with: "250"
+    save
+  end
+  
+  def edit_book_title title
+    click_link "Edit"
+    fill_in "Title", with: title
+    save
+  end
+  
+  def user_sees_book_title title
+    expect(page).to have_content title
   end
 end
